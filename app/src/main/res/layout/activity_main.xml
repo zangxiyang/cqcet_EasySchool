@@ -8,34 +8,71 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/homeToolBarColor"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:text="@string/home_title"
-        android:textColor="@color/backWhiteTextColor"
-        android:textSize="20dp" />
 
-    </androidx.appcompat.widget.Toolbar>
+    <FrameLayout
+            android:id="@+id/fl_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+    <com.chaychan.library.BottomBarLayout
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@color/tabBottomBack"
+            >
 
-    <com.shizhefei.view.viewpager.SViewPager
-        android:id="@+id/tabmain_viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#eee" />
+        <com.chaychan.library.BottomBarItem
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:iconNormal="@mipmap/home_normal"
+                app:iconSelected="@mipmap/home_fire"
+                app:itemText="@string/home_title"
+                app:textColorNormal="@color/tabBottomTitleNormal"
+                app:textColorSelected="@color/tabBottomTitleFire"
+                app:itemTextSize="8sp"
+                app:itemMarginTop="1dp"
+                app:openTouchBg="false"
 
-    <com.shizhefei.view.indicator.FixedIndicatorView
-        android:id="@+id/tabmain_indicator"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/border"
-        />
+                />
+
+        <com.chaychan.library.BottomBarItem
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:iconNormal="@mipmap/func_normal"
+                app:iconSelected="@mipmap/func_fire"
+                app:itemText="@string/func_title"
+                app:textColorNormal="@color/tabBottomTitleNormal"
+                app:textColorSelected="@color/tabBottomTitleFire"
+                app:itemTextSize="8sp"
+                app:itemMarginTop="1dp"
+                app:openTouchBg="false"
+                />
+
+
+        <com.chaychan.library.BottomBarItem
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:iconNormal="@mipmap/my_normal"
+                app:iconSelected="@mipmap/my_fire"
+                app:itemText="@string/my_title"
+                app:textColorNormal="@color/tabBottomTitleNormal"
+                app:textColorSelected="@color/tabBottomTitleFire"
+                app:itemTextSize="8sp"
+                app:itemMarginTop="1dp"
+                app:openTouchBg="false"
+                />
+
+
+
+    </com.chaychan.library.BottomBarLayout>
+
+
 
 </LinearLayout>

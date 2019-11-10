@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <stroke
-        android:color="#B9B9B9"
-        android:width="1dp"
-        />
-    <solid
-        android:color="#fff"/>
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/toolbarBottomBorderColor"/>
+        </shape>
+    </item>
+    <item android:bottom="1dp">
+        <shape>
+            <solid android:color="@color/tabBottomBack"/>
+        </shape>
+    </item>
+</layer-list>
