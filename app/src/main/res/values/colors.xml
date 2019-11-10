@@ -6,6 +6,7 @@
     <color name="homeToolBarColor">#FFF</color>
     <color name="backWhiteTextColor">#505050</color>
     <color name="tabBottomTitleFire">#F85D1B</color>
-    <color name="tabBottomTitleNormal">#E5E5E5</color>
+    <color name="tabBottomTitleNormal">#9A9A9A</color>
     <color name="tabBottomBack">#FFF</color>
+    <color name="toolbarBottomBorderColor">#999</color>
 </resources>
