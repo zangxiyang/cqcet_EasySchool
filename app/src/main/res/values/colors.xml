@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="homeToolBarColor">#FFF</color>
+    <color name="backWhiteTextColor">#505050</color>
+    <color name="tabBottomTitleFire">#F85D1B</color>
+    <color name="tabBottomTitleNormal">#E5E5E5</color>
+    <color name="tabBottomBack">#FFF</color>
 </resources>
