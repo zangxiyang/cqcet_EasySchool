@@ -1,4 +1,6 @@
-package com.imsle.cqceteasayschool.test;
+package com.imsle.cqceteasayschool;
+
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -9,16 +11,16 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-
-
 /**
- * Created by Seale on 2019/11/11.
- * Author:臧锡洋
- * 功能描述: 测试类
+ * 类名:TestAll
+ * 说明:
+ * 创建时间: 2019/11/11 21:48
+ * 创建人: 臧锡洋
  */
-public class TestMain {
-    private static OkHttpClient client = new OkHttpClient();
-    public static void main(String[] args) {
+public class TestAll {
+    private OkHttpClient client = new OkHttpClient();
+    @Test
+    public void okTest() {
 
         //get请求获取cookies
 
@@ -35,6 +37,7 @@ public class TestMain {
                 if(response.code() >= 200 && response.code() < 300) {
                     System.out.println(response.header("Set-Cookie"));
                     String cookie_Str = response.headers().get("Set-Cookie");
+
                 }
             }
         });
