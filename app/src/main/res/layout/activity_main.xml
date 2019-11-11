@@ -22,7 +22,7 @@
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_gravity="center"
-            android:background="@color/tabBottomBack"
+            android:background="@drawable/border_top"
             >
 
         <com.chaychan.library.BottomBarItem

@@ -8,5 +8,5 @@
     <color name="tabBottomTitleFire">#F85D1B</color>
     <color name="tabBottomTitleNormal">#9A9A9A</color>
     <color name="tabBottomBack">#FFF</color>
-    <color name="toolbarBottomBorderColor">#999</color>
+    <color name="toolbarBottomBorderColor">#DBDBDB</color>
 </resources>
