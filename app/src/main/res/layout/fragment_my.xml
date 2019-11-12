@@ -1,6 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/myFragmentBack"
+        android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/myFragmentTopBackColor"
+            android:orientation="vertical"
+            android:padding="20dp"
+            tools:ignore="UselessParent">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <com.shehuan.niv.NiceImageView
+                    android:id="@+id/my_usersImage"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:src="@drawable/tx"
+                    app:border_color="#FFFFFF"
+                    app:border_width="4dp"
+                    app:is_circle="true" />
+
+            <TextView
+                    android:id="@+id/my_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/my_usersImage"
+                    android:text="当前未登录"
+                    android:textColor="#FFF"
+                    android:textSize="23dp" />
+
+            <TextView
+                    android:id="@+id/my_userFinalLoginDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/my_userName"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toEndOf="@id/my_usersImage"
+                    android:text="最后登录:暂无"
+                    android:textColor="#FFF"
+                    android:textSize="14dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.qmuiteam.qmui.layout.QMUILinearLayout
+            android:id="@+id/my_infoBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="-60dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/qmui_config_color_white"
+            android:orientation="vertical"
+            android:paddingBottom="30dp"
+            android:paddingTop="30dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            app:qmui_showBorderOnlyBeforeL="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:id="@+id/my_info_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="姓名:臧锡洋"
+                    android:textColor="@color/myFragmentBoxInfoColor"
+                    android:textSize="14dp" />
+
+            <TextView
+                    android:id="@+id/my_info_studentNum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="学号:2017180543"
+                    android:textColor="@color/myFragmentBoxInfoColor"
+                    android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+            <TextView
+                    android:id="@+id/my_info_major"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="专业:移动应用开发"
+                    android:textColor="@color/myFragmentBoxInfoColor"
+                    android:textSize="14dp" />
+
+            <TextView
+                    android:id="@+id/my_info_college"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="学院:人工智能与大数据学院"
+                    android:textColor="@color/myFragmentBoxInfoColor"
+                    android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+            <TextView
+                    android:id="@+id/my_info_class"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="班级:移动1701"
+                    android:textColor="@color/myFragmentBoxInfoColor"
+                    android:textSize="14dp" />
+
+            <LinearLayout
+                    android:id="@+id/my_info_reBindNum"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                <ImageView
+                        android:src="@mipmap/lock"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        />
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="重新绑定学号"
+                        android:textColor="@color/myFragmentInfoBindNumTextColor"
+                        android:textSize="14dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </com.qmuiteam.qmui.layout.QMUILinearLayout>
+
+        <com.qmuiteam.qmui.layout.QMUILinearLayout
+                android:id="@+id/my_bottomContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/qmui_config_color_white"
+                android:orientation="vertical"
+                app:qmui_showBorderOnlyBeforeL="true"
+                >
+            <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+                    android:id="@+id/my_bottom_groupListView"
+                    android:layout_marginTop="-17dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="#fff"
+
+                    />
+        </com.qmuiteam.qmui.layout.QMUILinearLayout>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp">
+        <com.qmuiteam.qmui.layout.QMUILinearLayout
+                android:id="@+id/my_lastContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/qmui_config_color_white"
+                android:orientation="vertical"
+                app:qmui_showBorderOnlyBeforeL="true"
+                >
+            <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+                    android:id="@+id/my_last_groupListView"
+                    android:layout_marginTop="-17dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="#fff"
+
+                    />
+        </com.qmuiteam.qmui.layout.QMUILinearLayout>
+    </ScrollView>
 
 </LinearLayout>

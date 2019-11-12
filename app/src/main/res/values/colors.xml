@@ -9,4 +9,8 @@
     <color name="tabBottomTitleNormal">#9A9A9A</color>
     <color name="tabBottomBack">#FFF</color>
     <color name="toolbarBottomBorderColor">#DBDBDB</color>
+    <color name="myFragmentTopBackColor">#8E3FB5</color>
+    <color name="myFragmentBoxInfoColor">#222222</color>
+    <color name="myFragmentBack">#EEEEEE</color>
+    <color name="myFragmentInfoBindNumTextColor">#FF9904</color>
 </resources>

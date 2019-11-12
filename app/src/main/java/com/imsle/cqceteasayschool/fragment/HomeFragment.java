@@ -70,6 +70,13 @@ public class HomeFragment extends ImmersionFragment {
         return view;
     }
 
+    /***
+     * 函数名: initImmersionBar
+     * 函数说明: 初始化沉浸式
+     * 创建时间: 2019/11/13 2:56
+     * @param:
+     * @return: void
+     */
     @Override
     public void initImmersionBar() {
 

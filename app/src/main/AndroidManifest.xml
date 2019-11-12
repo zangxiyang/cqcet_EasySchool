@@ -9,7 +9,7 @@
             android:resizeableActivity="true"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/QMUI.Compat.NoActionBar">
         <!--适配华为（huawei）刘海屏-->
         <meta-data
                 android:name="android.notch_support"
