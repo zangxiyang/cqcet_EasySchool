@@ -54,10 +54,13 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //腾讯UI组件库
-    implementation 'com.qmuiteam:qmui:1.4.0'
+    implementation 'com.qmuiteam:qmui:1.4.3'
     //圆角
     implementation 'com.github.SheHuan:NiceImageView:1.0.5'
 
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    implementation "com.qmuiteam:arch:0.6.1"
+    annotationProcessor "com.qmuiteam:arch-compiler:0.6.1"
 }

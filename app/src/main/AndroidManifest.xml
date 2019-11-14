@@ -2,22 +2,32 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.imsle.cqceteasayschool">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
+            android:name=".App"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:resizeableActivity="true"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/QMUI.Compat.NoActionBar">
-        <!--适配华为（huawei）刘海屏-->
+            android:theme="@style/AppTheme.NoActionBar">
+        <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
                 android:name="android.notch_support"
-                android:value="true" />
-        <!--适配小米（xiaomi）刘海屏-->
+                android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
                 android:name="notch.config"
                 android:value="portrait|landscape" />
+
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,14 +35,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <activity android:name=".activity.AboutActivity"
+                android:theme="@style/AppTheme.NoActionBar.About">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        </activity>
+    </application>
 
 </manifest>

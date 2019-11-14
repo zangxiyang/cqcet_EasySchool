@@ -1,5 +1,6 @@
 package com.imsle.cqceteasayschool.fragment;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,22 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gyf.immersionbar.ImmersionBar;
-import com.gyf.immersionbar.components.ImmersionFragment;
-import com.imsle.cqceteasayschool.R;
-import com.qmuiteam.qmui.layout.QMUILinearLayout;
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.qmuiteam.qmui.util.QMUIViewHelper;
-import com.qmuiteam.qmui.widget.QMUILoadingView;
-import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
-import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.gyf.immersionbar.ImmersionBar;
+import com.gyf.immersionbar.components.ImmersionFragment;
+import com.gyf.immersionbar.components.ImmersionOwner;
+import com.gyf.immersionbar.components.SimpleImmersionOwner;
+import com.imsle.cqceteasayschool.R;
+import com.imsle.cqceteasayschool.activity.AboutActivity;
+import com.qmuiteam.qmui.arch.QMUIFragment;
+import com.qmuiteam.qmui.layout.QMUILinearLayout;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
+import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +39,7 @@ import butterknife.ButterKnife;
  * Author:臧锡洋
  * 功能描述:
  */
-public class MyFragment extends ImmersionFragment {
+public class MyFragment extends ImmersionFragment{
     @BindView(R.id.my_userName)
     TextView my_UserName;
     @BindView(R.id.my_infoBox)
@@ -49,31 +52,29 @@ public class MyFragment extends ImmersionFragment {
     QMUIGroupListView my_last_groupListView;
     @BindView(R.id.my_lastContainer)
     QMUILinearLayout my_lastContainer;
+    @BindView(R.id.fillView)
+    View fillView;
 
     private float mShadowAlpha = 0.4f;
     private int mShadowElevationDp = 7;
     private int mRadius;
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_my,null);
+        View view =  LayoutInflater.from(getContext()).inflate(R.layout.fragment_my,null);
         mRadius = QMUIDisplayHelper.dp2px(getContext(), 15);
         ButterKnife.bind(this,view);
         loadShadow();
         initGroupListView();
         return view;
-    }
-    @Override
-    public void initImmersionBar() {
-        ImmersionBar.with(this)
-                .fitsSystemWindows(true)
-                .statusBarColor(R.color.myFragmentTopBackColor)
-                .autoStatusBarDarkModeEnable(true)
-                .init();
     }
 
     /**
@@ -159,7 +160,14 @@ public class MyFragment extends ImmersionFragment {
         QMUIGroupListView.newSection(getContext())
                 .addItemView(returnsQuestionItem,onClickListener)
                 .addItemView(QqunItem, onClickListener)
-                .addItemView(aboutItem, onClickListener)
+                .addItemView(aboutItem, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), AboutActivity.class);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
+                    }
+                })
                 .addItemView(websiteItem, onClickListener)
                 .addTo(my_bottom_groupListView);
 
@@ -172,4 +180,13 @@ public class MyFragment extends ImmersionFragment {
     }
 
 
+    @Override
+    public void initImmersionBar() {
+
+        ImmersionBar.with(this)
+                .statusBarView(fillView)
+                .statusBarColor(R.color.myFragmentTopBackColor)
+                .autoStatusBarDarkModeEnable(true)
+                .init();
+    }
 }

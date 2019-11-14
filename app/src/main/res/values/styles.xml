@@ -8,11 +8,19 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <!--沉浸式状态栏-->
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
+    <style name="AppTheme.NoActionBar" parent="QMUI.Compat.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
 
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+    <style name="AppTheme.NoActionBar.About" parent="QMUI.Compat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
     <style name="BannerDefaultStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">180dp</item>
@@ -41,4 +49,5 @@
         <!-- 提示文案的文字颜色 -->
         <item name="banner_tipTextColor">@android:color/white</item>
     </style>
+
 </resources>
