@@ -13,4 +13,11 @@
     <color name="myFragmentBoxInfoColor">#222222</color>
     <color name="myFragmentBack">#EEEEEE</color>
     <color name="myFragmentInfoBindNumTextColor">#FF9904</color>
+
+
+
+    <color name="RefreshThemeForAccentColor">#FFFFFF</color>
+    <color name="RefreshThemeForPrimaryColor">#EEEEEE</color>
+    <color name="loadMoreThemeForAccentColor">#FF9904</color>
+    <color name="loadMoreThemeForPrimaryColor">#EEEEEE</color>
 </resources>

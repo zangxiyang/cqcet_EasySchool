@@ -9,17 +9,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.donkingliang.headerviewadapter.adapter.HeaderViewAdapter;
-import com.donkingliang.headerviewadapter.view.HeaderRecyclerView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.immersionbar.ImmersionBar;
 import com.gyf.immersionbar.components.ImmersionFragment;
 import com.imsle.cqceteasayschool.R;
 import com.imsle.cqceteasayschool.adapter.HomeRecyclerAdapter;
 import com.imsle.cqceteasayschool.model.Banner;
 import com.imsle.cqceteasayschool.model.News;
+import com.scwang.smartrefresh.header.DropBoxHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -30,11 +39,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
 /**
@@ -45,11 +49,13 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 public class HomeFragment extends ImmersionFragment {
     private static final String TAG = "HomeFragment";
     private View view ;
-    private HeaderRecyclerView home_recyclerView ;
+    private RecyclerView home_recyclerView ;
     private BGABanner banner_home;
     private View banner_home_view;
     private Banner bannerModel = new Banner();
     private List<News> newsList = new ArrayList<>();
+    private SmartRefreshLayout refreshLayout ;
+
     Handler handler = new Handler();
 
     @Nullable
@@ -57,7 +63,7 @@ public class HomeFragment extends ImmersionFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_home,container,false);
-
+        initSmartRefresh();
         loadData();//加载数据
         try {
             loadBannerData(); // 加载头图数据
@@ -87,26 +93,27 @@ public class HomeFragment extends ImmersionFragment {
                 .init();
     }
 
-    private void    initRecyclerView(){
-        home_recyclerView = (HeaderRecyclerView)view.findViewById(R.id.home_recyclerView);
-
-
+    private void initRecyclerView(){
+        home_recyclerView = view.findViewById(R.id.home_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         home_recyclerView.setLayoutManager(linearLayoutManager);
         home_recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-        home_recyclerView.addHeaderView(banner_home_view);
+
         //本身的适配器
-        HomeRecyclerAdapter adapter = new HomeRecyclerAdapter(newsList);
+        HomeRecyclerAdapter adapter = new HomeRecyclerAdapter(R.layout.recycler_item,newsList);
         adapter.setOnItemClickListener(new HomeRecyclerAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, News news,int i) {
                 Toast.makeText(getContext(),"点击了第"+i+"项",Toast.LENGTH_SHORT).show();
             }
         });
-        //对适配器进行包装
+
         //TODO 进行添加轮播图操作
-        Log.d(TAG, "initUI: 加载中");
+        adapter.addHeaderView(banner_home_view);
+
+        adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
         home_recyclerView.setAdapter(adapter);
+
     }
 
     /**
@@ -178,5 +185,32 @@ public class HomeFragment extends ImmersionFragment {
             newsList.add(news);
         }
     }
+
+    /***
+     * 函数名: initSmartRefresh
+     * 函数说明: 初始化上拉刷新下拉加载
+     * 创建时间: 2019/11/15 21:16
+     * @param:
+     * @return: void
+     */
+    private void initSmartRefresh(){
+        refreshLayout = view.findViewById(R.id.refreshLayout);
+/*        refreshLayout.setPrimaryColorsId(R.color.RefreshThemeForPrimaryColor, android.R.color.white);*/
+
+        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Toast.makeText(getContext(),"下拉",Toast.LENGTH_SHORT).show();
+                refreshLayout.finishRefresh(3000);
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                Toast.makeText(getContext(),"上拉",Toast.LENGTH_SHORT).show();
+                refreshLayout.finishLoadMore(3000);
+            }
+        });
+    }
+
 
 }
