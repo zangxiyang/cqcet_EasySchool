@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.LoginActivity"
+        android:background="@color/homeToolBarColor"
+        android:orientation="vertical"
+        >
+    <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center_horizontal"
+            android:padding="20dp">
+        <EditText
+                android:id="@+id/login_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:hint="请输入帐号"
+                android:inputType="number"
+                android:layout_marginBottom="20dp"
+
+                />
+        <EditText
+                android:id="@+id/login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="textPassword"
+                android:hint="请输密码"
+                android:layout_marginBottom="20dp"
+
+                />
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                android:id="@+id/login_button"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="登录"
+                android:textSize="20dp"
+                app:qmui_radius="10dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

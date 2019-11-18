@@ -1,8 +1,8 @@
 package com.imsle.cqceteasayschool.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +21,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.immersionbar.ImmersionBar;
 import com.gyf.immersionbar.components.ImmersionFragment;
 import com.imsle.cqceteasayschool.R;
+import com.imsle.cqceteasayschool.activity.WebViewActivity;
 import com.imsle.cqceteasayschool.adapter.HomeRecyclerAdapter;
 import com.imsle.cqceteasayschool.model.Banner;
 import com.imsle.cqceteasayschool.model.News;
-import com.scwang.smartrefresh.header.DropBoxHeader;
+import com.imsle.cqceteasayschool.utils.NewsUtil;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import org.jsoup.Jsoup;
@@ -48,21 +49,28 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 public class HomeFragment extends ImmersionFragment {
     private static final String TAG = "HomeFragment";
-    private View view ;
-    private RecyclerView home_recyclerView ;
+    private View view;
+    public RecyclerView home_recyclerView;
     private BGABanner banner_home;
     private View banner_home_view;
     private Banner bannerModel = new Banner();
     private List<News> newsList = new ArrayList<>();
-    private SmartRefreshLayout refreshLayout ;
+    private SmartRefreshLayout refreshLayout;
+    HomeRecyclerAdapter adapter = new HomeRecyclerAdapter(R.layout.recycler_item, newsList);
+    int currentPage = 0;
+
+    QMUITipDialog qmuiTipDialog;
 
     Handler handler = new Handler();
+
+    private String nextUrl;
+    private NewsUtil newsUtil;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_home,container,false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
         initSmartRefresh();
         loadData();//加载数据
         try {
@@ -93,18 +101,23 @@ public class HomeFragment extends ImmersionFragment {
                 .init();
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         home_recyclerView = view.findViewById(R.id.home_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         home_recyclerView.setLayoutManager(linearLayoutManager);
         home_recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         //本身的适配器
-        HomeRecyclerAdapter adapter = new HomeRecyclerAdapter(R.layout.recycler_item,newsList);
         adapter.setOnItemClickListener(new HomeRecyclerAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(View view, News news,int i) {
-                Toast.makeText(getContext(),"点击了第"+i+"项",Toast.LENGTH_SHORT).show();
+            public void OnItemClick(View view, News news, int i) {
+                String url = news.getUrl();
+                Bundle bundle = new Bundle();
+                bundle.putString("url",url);
+                Intent intent = new Intent(getContext(), WebViewActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
             }
         });
 
@@ -119,10 +132,10 @@ public class HomeFragment extends ImmersionFragment {
     /**
      * 初始化首页banner视图
      */
-    public void initBanner(){
-        banner_home_view = LayoutInflater.from(getContext()).inflate(R.layout.banner_item,null);
+    public void initBanner() {
+        banner_home_view = LayoutInflater.from(getContext()).inflate(R.layout.banner_item, null);
         banner_home = banner_home_view.findViewById(R.id.banner_home);
-        banner_home.setAdapter(new BGABanner.Adapter<ImageView,String>() {
+        banner_home.setAdapter(new BGABanner.Adapter<ImageView, String>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, @Nullable String model, int position) {
                 Glide.with(getActivity())
@@ -138,53 +151,66 @@ public class HomeFragment extends ImmersionFragment {
     }
 
 
-
     /**
      * 解析Banner数据
      */
 
     public void loadBannerData() throws IOException {
-            String url = "https://www.cqcet.edu.cn/";
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Document document = null;
-                    try {
-                        document = Jsoup.connect(url).get();
-                        Elements heros = document.select(".heros.clearfix > li img");
+        String url = "https://www.cqcet.edu.cn/";
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Document document = null;
+                try {
+                    document = Jsoup.connect(url).get();
+                    Elements heros = document.select(".heros.clearfix > li img");
 
-                        List<String> img = new ArrayList<>();
-                        for (Element element : heros) {
-                            img.add(url + element.attr("src"));
-                        }
-                        bannerModel.setImg(img);
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                banner_home.setData(bannerModel.getImg(), null);
-                            }
-                        });
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    List<String> img = new ArrayList<>();
+                    for (Element element : heros) {
+                        img.add(url + element.attr("src"));
                     }
+                    bannerModel.setImg(img);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            banner_home.setData(bannerModel.getImg(), null);
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+            }
 
-            }).start();
-        }
+        }).start();
+    }
 
 
     /**
      * TODO RecyclerView 获取新闻数据
      */
-    private void loadData (){
-        for (int i = 0 ; i < 30 ; i ++){
-            News news = new News();
-            news.setTitle("测试"+i);
-            news.setSubTitle("测试"+i+"条描述");
-            news.setDate("2019年11月"+(i+1)+"日");
-            newsList.add(news);
-        }
+    private void loadData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<News> newData;
+                newsUtil = new NewsUtil("https://www.cqcet.edu.cn/index/xwdt.htm", "HomeFragment");
+                newData = newsUtil.getNewsDetail();
+                newsList.clear();
+                newsList.addAll(newData);
+                nextUrl = newsUtil.getNextPageUrl();
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
+            }
+
+        }).start();
     }
+
 
     /***
      * 函数名: initSmartRefresh
@@ -193,21 +219,53 @@ public class HomeFragment extends ImmersionFragment {
      * @param:
      * @return: void
      */
-    private void initSmartRefresh(){
+    private void initSmartRefresh() {
         refreshLayout = view.findViewById(R.id.refreshLayout);
-/*        refreshLayout.setPrimaryColorsId(R.color.RefreshThemeForPrimaryColor, android.R.color.white);*/
+        /*        refreshLayout.setPrimaryColorsId(R.color.RefreshThemeForPrimaryColor, android.R.color.white);*/
 
-        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener(){
+        refreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                Toast.makeText(getContext(),"下拉",Toast.LENGTH_SHORT).show();
-                refreshLayout.finishRefresh(3000);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayList<News> newData;
+                        newsUtil = new NewsUtil("https://www.cqcet.edu.cn/index/xwdt.htm", "HomeFragment");
+                        newData = newsUtil.getNewsDetail();
+                        newsList.clear();
+                        newsList.addAll(newData);
+                        nextUrl = newsUtil.getNextPageUrl();
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                            }
+                        },1500);
+                        refreshLayout.finishRefresh(1500);
+                    }
+                }).start();
+
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                Toast.makeText(getContext(),"上拉",Toast.LENGTH_SHORT).show();
-                refreshLayout.finishLoadMore(3000);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayList<News> next_news = new ArrayList<>();
+                        NewsUtil newsUtil = new NewsUtil(nextUrl,"homeFragment");
+                        next_news = newsUtil.getNewsDetail();
+                        newsList.addAll(next_news);
+                       handler.postDelayed(new Runnable() {
+                           @Override
+                           public void run() {
+                               adapter.notifyDataSetChanged();
+                           }
+                       },1500);
+                        refreshLayout.finishLoadMore(1500);
+                    }
+                }).start();
             }
         });
     }

@@ -20,18 +20,24 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.gyf.immersionbar.components.ImmersionFragment;
 import com.gyf.immersionbar.components.ImmersionOwner;
 import com.gyf.immersionbar.components.SimpleImmersionOwner;
+import com.imsle.cqceteasayschool.App;
 import com.imsle.cqceteasayschool.R;
 import com.imsle.cqceteasayschool.activity.AboutActivity;
+import com.imsle.cqceteasayschool.activity.LoginActivity;
+import com.imsle.cqceteasayschool.activity.TimetableActivity;
+import com.imsle.cqceteasayschool.activity.WebViewActivity;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.layout.QMUILinearLayout;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
+import com.shehuan.niv.NiceImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+import butterknife.OnClick;
+import butterknife.internal.ListenerMethod;
 
 
 /**
@@ -54,6 +60,10 @@ public class MyFragment extends ImmersionFragment{
     QMUILinearLayout my_lastContainer;
     @BindView(R.id.fillView)
     View fillView;
+    @BindView(R.id.my_usersImage)
+    NiceImageView my_usersImage;
+
+
 
     private float mShadowAlpha = 0.4f;
     private int mShadowElevationDp = 7;
@@ -158,7 +168,14 @@ public class MyFragment extends ImmersionFragment{
         };
 
         QMUIGroupListView.newSection(getContext())
-                .addItemView(returnsQuestionItem,onClickListener)
+                .addItemView(returnsQuestionItem, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), TimetableActivity.class);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
+                    }
+                })
                 .addItemView(QqunItem, onClickListener)
                 .addItemView(aboutItem, new View.OnClickListener() {
                     @Override
@@ -168,7 +185,17 @@ public class MyFragment extends ImmersionFragment{
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
                     }
                 })
-                .addItemView(websiteItem, onClickListener)
+                .addItemView(websiteItem, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("url","https://www.imsle.com");
+                        Intent intent = new Intent(getContext(), WebViewActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent,bundle);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
+                    }
+                })
                 .addTo(my_bottom_groupListView);
 
         QMUIGroupListView.newSection(getContext())
@@ -188,5 +215,24 @@ public class MyFragment extends ImmersionFragment{
                 .statusBarColor(R.color.myFragmentTopBackColor)
                 .autoStatusBarDarkModeEnable(true)
                 .init();
+    }
+    public void isLogin(){
+        //TODO 如果当前已经登录则进行更新UI,从Bundle中获取信息
+
+    }
+
+    @OnClick(R.id.my_usersImage)
+    public void login_Listener(){
+        //进行登录判断
+        if ( App.login_status_flag == 0){
+            //当前没有登录
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
+        }
+        if (App.login_status_flag == 1){
+            //当前已经登录
+
+        }
     }
 }

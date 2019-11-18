@@ -59,6 +59,9 @@ dependencies {
     //圆角
     implementation 'com.github.SheHuan:NiceImageView:1.0.5'
 
+    //课表组件
+    implementation 'com.github.zfman:TimetableView:v2.0.7'
+    //butter knife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 

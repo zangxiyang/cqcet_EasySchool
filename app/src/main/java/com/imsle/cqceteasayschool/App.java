@@ -3,6 +3,7 @@ package com.imsle.cqceteasayschool;
 import android.app.Application;
 import android.content.Context;
 
+import com.imsle.cqceteasayschool.utils.ZhxyUtil;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -39,6 +40,14 @@ public class App extends Application {
             }
         });
     }
+    //0为未登录,1为登录
+    public static int login_status_flag = 0;
+
+    public static ZhxyUtil zhxyUtil = new ZhxyUtil();
+
+    //cookie
+    public static String basicCookie ;
+    public static String zhxyCookie;
 
     @Override
     public void onCreate() {

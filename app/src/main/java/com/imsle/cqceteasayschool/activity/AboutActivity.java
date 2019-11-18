@@ -1,5 +1,6 @@
 package com.imsle.cqceteasayschool.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -69,12 +70,25 @@ public class AboutActivity extends QMUIActivity {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(getApplicationContext(),"访问官网被点击",Toast.LENGTH_LONG).show();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("url","https://www.imsle.com");
+                        Intent intent = new Intent(getApplicationContext(),WebViewActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent,bundle);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
                     }
                 })
                 .addItemView(mAboutGroupListView.createItemView(getResources().getString(R.string.about_item_github)), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(getApplicationContext(),"访问Github被点击",Toast.LENGTH_LONG).show();
+                        String url = "https://github.com/zangxiyang/cqcet_EasySchool";
+                        Bundle bundle = new Bundle();
+                        bundle.putString("url",url);
+                        Intent intent = new Intent(getApplicationContext(),WebViewActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent,bundle);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
                     }
                 })
                 .addTo(mAboutGroupListView);

@@ -19,14 +19,15 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme.NoActionBar">
-        <!-- 适配华为（huawei）刘海屏 -->
+        <activity android:name=".activity.TimetableActivity"></activity>
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.WebViewActivity" /> <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
                 android:name="android.notch_support"
                 android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
                 android:name="notch.config"
                 android:value="portrait|landscape" />
-
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -35,10 +36,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AboutActivity"
-                android:theme="@style/AppTheme.NoActionBar.About">
-
-        </activity>
+        <activity
+                android:name=".activity.AboutActivity"
+                android:theme="@style/AppTheme.NoActionBar.About" />
     </application>
 
 </manifest>

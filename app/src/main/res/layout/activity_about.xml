@@ -39,7 +39,9 @@
                     android:layout_marginTop="15dp"
                     android:textColor="?attr/qmui_config_color_gray_3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="重电易校园"/>
 
             <TextView
                     android:id="@+id/version"
@@ -47,7 +49,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:textColor="?attr/qmui_config_color_gray_3"
-                    android:textSize="16sp" />
+                    android:textSize="14sp"
+                    android:text="版本:先行者Pro"
+                    />
 
 
             <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView

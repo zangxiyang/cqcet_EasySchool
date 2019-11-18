@@ -3,6 +3,8 @@ package com.imsle.cqceteasayschool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.chaychan.library.BottomBarItem;
@@ -10,6 +12,7 @@ import com.chaychan.library.BottomBarLayout;
 import com.imsle.cqceteasayschool.fragment.FuncFragment;
 import com.imsle.cqceteasayschool.fragment.HomeFragment;
 import com.imsle.cqceteasayschool.fragment.MyFragment;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.ArrayList;
 
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     if (previousPosition == currentPosition) {
                         //在首页的基础上再次点击
                         Log.d(TAG, "onItemSelected: 首页的基础上进行了点击");
+                        
                     }
                 }
 

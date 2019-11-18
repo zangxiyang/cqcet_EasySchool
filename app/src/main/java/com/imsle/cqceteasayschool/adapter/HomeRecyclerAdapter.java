@@ -1,9 +1,10 @@
 package com.imsle.cqceteasayschool.adapter;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -11,10 +12,6 @@ import com.imsle.cqceteasayschool.R;
 import com.imsle.cqceteasayschool.model.News;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Seale on 2019/11/11.
@@ -36,15 +33,15 @@ public class HomeRecyclerAdapter extends BaseQuickAdapter<News, BaseViewHolder> 
     protected void convert(@NonNull BaseViewHolder helper, News item) {
 
         TextView home_recycler_title;
-        TextView home_recycler_subTitle;
+        //TextView home_recycler_subTitle;
         TextView home_recycler_date;
 
         home_recycler_title = helper.getView(R.id.home_recycler_title);
-        home_recycler_subTitle = helper.getView(R.id.home_recycler_subTitle);
+        //home_recycler_subTitle = helper.getView(R.id.home_recycler_subTitle);
         home_recycler_date = helper.getView(R.id.home_recycler_date);
 
         home_recycler_title.setText(newsList.get(helper.getAdapterPosition()-getHeaderLayoutCount()).getTitle());
-        home_recycler_subTitle.setText(newsList.get(helper.getAdapterPosition()-getHeaderLayoutCount()).getSubTitle());
+        //home_recycler_subTitle.setText(newsList.get(helper.getAdapterPosition()-getHeaderLayoutCount()).getSubTitle());
         home_recycler_date.setText(newsList.get(helper.getAdapterPosition()-getHeaderLayoutCount()).getDate());
 
 
