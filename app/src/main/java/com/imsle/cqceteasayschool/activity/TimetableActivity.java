@@ -35,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TimetableActivity extends QMUIActivity {
-    public static final String AD_URL="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545749786636&di=fd5483be8b08b2e1f0485e772dadace4&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F5f9fae85770bb289f790e08d778516d128f0492a114a8-TNyOSi_fw658";
+    public static final String AD_URL="";
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
     @BindView(R.id.id_weekview)
@@ -138,7 +138,7 @@ public class TimetableActivity extends QMUIActivity {
                         onWeekLeftLayoutClicked();
                     }
                 })
-                .isShow(false)//设置隐藏，默认显示
+                .isShow(true)//设置隐藏，默认显示
                 .showView();
 
         timetableView.curWeek(1)

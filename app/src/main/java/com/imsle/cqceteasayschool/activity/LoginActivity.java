@@ -65,7 +65,7 @@ public class LoginActivity extends QMUIActivity {
     public void login(){
         String username , pwd ;
         username = login_username.getText().toString();
-        pwd = login_username.getText().toString();
+        pwd = login_password.getText().toString();
         if (!username.isEmpty() && !pwd.isEmpty()){
             //当前的帐号密码不为空
             new Thread(new Runnable() {

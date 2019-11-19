@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/homeToolBarColor"
+        android:orientation="vertical"
+        tools:context=".activity.ScoreQueryActivity">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#eee">
+    <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true" />
+
+    <com.qmuiteam.qmui.layout.QMUILinearLayout
+            android:id="@+id/score_headerBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/qmui_config_color_white"
+            android:orientation="vertical"
+            android:paddingStart="15dp"
+            android:paddingTop="30dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="30dp"
+            app:qmui_showBorderOnlyBeforeL="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/now_term"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当前学期:全部"
+                    android:textColor="@color/backWhiteTextColor"
+                    android:textSize="18dp" />
+
+            <LinearLayout
+                    android:id="@+id/score_changeTerm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@mipmap/refresh" />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更改学期"
+                        android:textColor="@color/scoreChangeTermTextColor"
+                        android:textSize="14dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    >
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="已修学分"
+                        android:textAlignment="center" />
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="正在修读学分"
+                        android:textAlignment="center" />
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+
+                    >
+                    <TextView
+                            android:id="@+id/score_now"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="150"
+                            android:textAlignment="center"
+                        />
+                <TextView
+                        android:id="@+id/score_doing"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="15"
+                        android:textAlignment="center"
+                        android:textColor="@color/app_red"
+                        />
+            </LinearLayout>
+        </LinearLayout>
+    </com.qmuiteam.qmui.layout.QMUILinearLayout>
+        <com.qmuiteam.qmui.layout.QMUILinearLayout
+                android:id="@+id/score_bottomBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/qmui_config_color_white"
+                android:orientation="vertical"
+                android:paddingStart="15dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="15dp"
+                android:layout_marginBottom="15dp"
+                app:qmui_showBorderOnlyBeforeL="true">
+
+            <com.bin.david.form.core.SmartTable
+                    android:id="@+id/score_table"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+        </com.qmuiteam.qmui.layout.QMUILinearLayout>
+    </LinearLayout>
+</LinearLayout>

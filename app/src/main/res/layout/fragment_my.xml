@@ -84,7 +84,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="姓名:臧锡洋"
+                    android:text="姓名:暂未登录"
                     android:textColor="@color/myFragmentBoxInfoColor"
                     android:textSize="14dp" />
 
@@ -93,7 +93,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="学号:2017180543"
+                    android:text="学号:"
                     android:textColor="@color/myFragmentBoxInfoColor"
                     android:textSize="14dp" />
         </LinearLayout>
@@ -108,7 +108,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="专业:移动应用开发"
+                    android:text="专业:"
                     android:textColor="@color/myFragmentBoxInfoColor"
                     android:textSize="14dp" />
 
@@ -119,7 +119,7 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="学院:人工智能与大数据学院"
+                    android:text="学院:"
                     android:textColor="@color/myFragmentBoxInfoColor"
                     android:textSize="14dp" />
         </LinearLayout>
@@ -134,7 +134,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="班级:移动1701"
+                    android:text="班级:"
                     android:textColor="@color/myFragmentBoxInfoColor"
                     android:textSize="14dp" />
 

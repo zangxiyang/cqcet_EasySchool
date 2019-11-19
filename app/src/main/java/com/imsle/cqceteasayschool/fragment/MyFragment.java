@@ -3,6 +3,7 @@ package com.imsle.cqceteasayschool.fragment;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,14 @@ import com.imsle.cqceteasayschool.App;
 import com.imsle.cqceteasayschool.R;
 import com.imsle.cqceteasayschool.activity.AboutActivity;
 import com.imsle.cqceteasayschool.activity.LoginActivity;
+import com.imsle.cqceteasayschool.activity.ScoreQueryActivity;
 import com.imsle.cqceteasayschool.activity.TimetableActivity;
 import com.imsle.cqceteasayschool.activity.WebViewActivity;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.layout.QMUILinearLayout;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 import com.shehuan.niv.NiceImageView;
@@ -63,6 +66,7 @@ public class MyFragment extends ImmersionFragment{
     @BindView(R.id.my_usersImage)
     NiceImageView my_usersImage;
 
+    Handler handler = new Handler();
 
 
     private float mShadowAlpha = 0.4f;
@@ -161,8 +165,18 @@ public class MyFragment extends ImmersionFragment{
             @Override
             public void onClick(View v) {
                 if (v instanceof QMUICommonListItemView) {
-                    CharSequence text = ((QMUICommonListItemView) v).getText();
-                    Toast.makeText(getActivity(), text + " is Clicked", Toast.LENGTH_SHORT).show();
+                    QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                            .setIconType(QMUITipDialog.Builder.ICON_TYPE_INFO)
+                            .setTipWord("当前功能并未开通!"+"\n"+"敬请期待!")
+                            .create();
+                    tipDialog.show();
+                    tipDialog.setCanceledOnTouchOutside(true);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            tipDialog.dismiss();
+                        }
+                    },2000);
                 }
             }
         };
@@ -171,12 +185,37 @@ public class MyFragment extends ImmersionFragment{
                 .addItemView(returnsQuestionItem, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), TimetableActivity.class);
-                        startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
+                        QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_INFO)
+                                .setTipWord("当前功能并未开通!"+"\n"+"敬请期待!")
+                                .create();
+                        tipDialog.show();
+                        tipDialog.setCanceledOnTouchOutside(true);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                tipDialog.dismiss();
+                            }
+                        },2000);
                     }
                 })
-                .addItemView(QqunItem, onClickListener)
+                .addItemView(QqunItem, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_INFO)
+                                .setTipWord("当前功能并未开通!"+"\n"+"敬请期待!")
+                                .create();
+                        tipDialog.show();
+                        tipDialog.setCanceledOnTouchOutside(true);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                tipDialog.dismiss();
+                            }
+                        },2000);
+                    }
+                })
                 .addItemView(aboutItem, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

@@ -68,6 +68,9 @@ dependencies {
     implementation "com.qmuiteam:arch:0.6.1"
     annotationProcessor "com.qmuiteam:arch-compiler:0.6.1"
 
+    //表格控件
+    implementation 'com.github.huangyanbin:SmartTable:2.2.0'
+
     //下拉上拉
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'

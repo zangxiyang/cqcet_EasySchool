@@ -1,6 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/myFragmentBack"
+        android:orientation="vertical">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:background="@mipmap/back_func"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center_horizontal"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="百宝箱"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:orientation="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                >
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/func_card_timeTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    app:cardMaxElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardPreventCornerOverlap="true"
+                    android:background="@color/white"
+                    android:focusable="true"
+                    app:cardUseCompatPadding="true"
+                    >
+
+                <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        >
+                    <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                        android:src="@mipmap/timetable"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                        android:text="课表"
+                            android:textColor="@color/backWhiteTextColor"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/func_card_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    app:cardMaxElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardPreventCornerOverlap="true"
+                    android:background="@color/white"
+                    android:focusable="true"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginLeft="20dp"
+                    >
+
+                <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        >
+                    <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/score"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="成绩查询"
+                            android:textColor="@color/backWhiteTextColor"
+                            android:textAlignment="center"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/func_card_exam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    app:cardMaxElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardPreventCornerOverlap="true"
+                    android:background="@color/white"
+                    android:focusable="true"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginLeft="20dp"
+                    >
+
+                <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        >
+                    <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/exam"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="考试安排"
+                            android:textColor="@color/backWhiteTextColor"
+                            android:textAlignment="center"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                >
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/func_card_calendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    app:cardMaxElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardPreventCornerOverlap="true"
+                    android:background="@color/white"
+                    android:focusable="true"
+                    app:cardUseCompatPadding="true"
+                    >
+
+                <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        >
+                    <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/calendar"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="教学周历"
+                            android:textColor="@color/backWhiteTextColor"
+                            android:textAlignment="center"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/func_card_way"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    app:cardMaxElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardPreventCornerOverlap="true"
+                    android:background="@color/white"
+                    android:focusable="true"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginLeft="20dp"
+                    >
+
+                <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        >
+                    <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/way"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="培养方案"
+                            android:textColor="@color/backWhiteTextColor"
+                            android:textAlignment="center"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/func_card_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    app:cardMaxElevation="3dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardPreventCornerOverlap="true"
+                    android:background="@color/white"
+                    android:focusable="true"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginLeft="20dp"
+                    >
+
+                <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:padding="15dp"
+                        >
+                    <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/note"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="笔记日常"
+                            android:textColor="@color/backWhiteTextColor"
+                            android:textAlignment="center"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

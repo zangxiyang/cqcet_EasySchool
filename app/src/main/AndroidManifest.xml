@@ -19,7 +19,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.TimetableActivity"></activity>
+        <activity android:name=".activity.ScoreQueryActivity"></activity>
+        <activity android:name=".activity.TimetableActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.WebViewActivity" /> <!-- 适配华为（huawei）刘海屏 -->
         <meta-data

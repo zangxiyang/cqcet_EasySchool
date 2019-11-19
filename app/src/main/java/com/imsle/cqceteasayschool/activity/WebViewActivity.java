@@ -79,7 +79,7 @@ public class WebViewActivity extends QMUIActivity {
                 QMUIStatusBarHelper.translucent(getWindow(),getResources().getColor(R.color.myFragmentTopBackColor));
             }
         });
-        mTopBar.setTitle(R.string.about_title);
+        mTopBar.setTitle("正在加载..");
         //改为浅色
         QMUIStatusBarHelper.setStatusBarLightMode(this);
         mTopBar.setBackgroundColor(getResources().getColor(R.color.homeToolBarColor));
