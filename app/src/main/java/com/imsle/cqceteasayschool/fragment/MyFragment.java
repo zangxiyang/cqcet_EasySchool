@@ -28,14 +28,21 @@ import com.imsle.cqceteasayschool.activity.LoginActivity;
 import com.imsle.cqceteasayschool.activity.ScoreQueryActivity;
 import com.imsle.cqceteasayschool.activity.TimetableActivity;
 import com.imsle.cqceteasayschool.activity.WebViewActivity;
+import com.imsle.cqceteasayschool.model.KCachievement;
+import com.imsle.cqceteasayschool.model.ScoreTable;
+import com.imsle.cqceteasayschool.service.InfoClient;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.layout.QMUILinearLayout;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.grouplist.QMUICommonListItemView;
 import com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView;
 import com.shehuan.niv.NiceImageView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +55,7 @@ import butterknife.internal.ListenerMethod;
  * Author:臧锡洋
  * 功能描述:
  */
-public class MyFragment extends ImmersionFragment{
+public class MyFragment extends ImmersionFragment {
     @BindView(R.id.my_userName)
     TextView my_UserName;
     @BindView(R.id.my_infoBox)
@@ -65,6 +72,17 @@ public class MyFragment extends ImmersionFragment{
     View fillView;
     @BindView(R.id.my_usersImage)
     NiceImageView my_usersImage;
+    @BindView(R.id.my_info_name)
+    TextView my_info_namae;
+    @BindView(R.id.my_info_studentNum)
+    TextView my_info_studentNum;
+    @BindView(R.id.my_info_major)
+    TextView my_info_major;
+    @BindView(R.id.my_info_college)
+    TextView my_info_college;
+    @BindView(R.id.my_info_class)
+    TextView my_info_class;
+
 
     Handler handler = new Handler();
 
@@ -83,9 +101,9 @@ public class MyFragment extends ImmersionFragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  LayoutInflater.from(getContext()).inflate(R.layout.fragment_my,null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_my, null);
         mRadius = QMUIDisplayHelper.dp2px(getContext(), 15);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         loadShadow();
         initGroupListView();
         return view;
@@ -95,13 +113,14 @@ public class MyFragment extends ImmersionFragment{
      * 函数名: loadShadow
      * 函数说明: 加载阴影
      * 创建时间: 2019/11/13 4:14
+     *
      * @param:
      * @return: void
      */
-    private void loadShadow(){
-        my_infoBox.setRadiusAndShadow(mRadius,QMUIDisplayHelper.dp2px(getActivity(), mShadowElevationDp), mShadowAlpha);
-        my_bottomContainer.setRadiusAndShadow(mRadius,QMUIDisplayHelper.dp2px(getActivity(), mShadowElevationDp), mShadowAlpha);
-        my_lastContainer.setRadiusAndShadow(mRadius,QMUIDisplayHelper.dp2px(getActivity(), mShadowElevationDp), mShadowAlpha);
+    private void loadShadow() {
+        my_infoBox.setRadiusAndShadow(mRadius, QMUIDisplayHelper.dp2px(getActivity(), mShadowElevationDp), mShadowAlpha);
+        my_bottomContainer.setRadiusAndShadow(mRadius, QMUIDisplayHelper.dp2px(getActivity(), mShadowElevationDp), mShadowAlpha);
+        my_lastContainer.setRadiusAndShadow(mRadius, QMUIDisplayHelper.dp2px(getActivity(), mShadowElevationDp), mShadowAlpha);
     }
 
     /***
@@ -111,7 +130,7 @@ public class MyFragment extends ImmersionFragment{
      * @param:
      * @return: void
      */
-    private void initGroupListView(){
+    private void initGroupListView() {
 
         my_bottom_groupListView.setSeparatorStyle(QMUIGroupListView.SEPARATOR_STYLE_NONE);
         my_last_groupListView.setSeparatorStyle(QMUIGroupListView.SEPARATOR_STYLE_NONE);
@@ -120,7 +139,7 @@ public class MyFragment extends ImmersionFragment{
         returnsQuestionItem.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.task_red));
         returnsQuestionItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         ImageView right_img = new ImageView(getContext());
-        right_img.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.right));
+        right_img.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.right));
         returnsQuestionItem.addAccessoryCustomView(right_img);
 
         /***********************************/
@@ -128,7 +147,7 @@ public class MyFragment extends ImmersionFragment{
         QqunItem.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.qq_normal));
         QqunItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         ImageView right_img1 = new ImageView(getContext());
-        right_img1.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.right));
+        right_img1.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.right));
         QqunItem.addAccessoryCustomView(right_img1);
 
         /***********************************/
@@ -136,7 +155,7 @@ public class MyFragment extends ImmersionFragment{
         aboutItem.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.about));
         aboutItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         ImageView right_img2 = new ImageView(getContext());
-        right_img2.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.right));
+        right_img2.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.right));
         aboutItem.addAccessoryCustomView(right_img2);
 
         /***********************************/
@@ -144,7 +163,7 @@ public class MyFragment extends ImmersionFragment{
         websiteItem.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.website));
         websiteItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         ImageView right_img3 = new ImageView(getContext());
-        right_img3.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.right));
+        right_img3.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.right));
         websiteItem.addAccessoryCustomView(right_img3);
 
 
@@ -153,7 +172,7 @@ public class MyFragment extends ImmersionFragment{
         adviceItem.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.returns));
         adviceItem.setAccessoryType(QMUICommonListItemView.ACCESSORY_TYPE_CUSTOM);
         ImageView right_img4 = new ImageView(getContext());
-        right_img4.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.mipmap.right));
+        right_img4.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.right));
         adviceItem.addAccessoryCustomView(right_img4);
 
         /***********************************/
@@ -167,7 +186,7 @@ public class MyFragment extends ImmersionFragment{
                 if (v instanceof QMUICommonListItemView) {
                     QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                             .setIconType(QMUITipDialog.Builder.ICON_TYPE_INFO)
-                            .setTipWord("当前功能并未开通!"+"\n"+"敬请期待!")
+                            .setTipWord("当前功能并未开通!" + "\n" + "敬请期待!")
                             .create();
                     tipDialog.show();
                     tipDialog.setCanceledOnTouchOutside(true);
@@ -176,7 +195,7 @@ public class MyFragment extends ImmersionFragment{
                         public void run() {
                             tipDialog.dismiss();
                         }
-                    },2000);
+                    }, 2000);
                 }
             }
         };
@@ -187,7 +206,7 @@ public class MyFragment extends ImmersionFragment{
                     public void onClick(View view) {
                         QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_INFO)
-                                .setTipWord("当前功能并未开通!"+"\n"+"敬请期待!")
+                                .setTipWord("当前功能并未开通!" + "\n" + "敬请期待!")
                                 .create();
                         tipDialog.show();
                         tipDialog.setCanceledOnTouchOutside(true);
@@ -196,7 +215,7 @@ public class MyFragment extends ImmersionFragment{
                             public void run() {
                                 tipDialog.dismiss();
                             }
-                        },2000);
+                        }, 2000);
                     }
                 })
                 .addItemView(QqunItem, new View.OnClickListener() {
@@ -204,7 +223,7 @@ public class MyFragment extends ImmersionFragment{
                     public void onClick(View view) {
                         QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_INFO)
-                                .setTipWord("当前功能并未开通!"+"\n"+"敬请期待!")
+                                .setTipWord("当前功能并未开通!" + "\n" + "敬请期待!")
                                 .create();
                         tipDialog.show();
                         tipDialog.setCanceledOnTouchOutside(true);
@@ -213,7 +232,7 @@ public class MyFragment extends ImmersionFragment{
                             public void run() {
                                 tipDialog.dismiss();
                             }
-                        },2000);
+                        }, 2000);
                     }
                 })
                 .addItemView(aboutItem, new View.OnClickListener() {
@@ -228,18 +247,67 @@ public class MyFragment extends ImmersionFragment{
                     @Override
                     public void onClick(View view) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("url","https://www.imsle.com");
+                        bundle.putString("url", "https://www.imsle.com");
                         Intent intent = new Intent(getContext(), WebViewActivity.class);
                         intent.putExtras(bundle);
-                        startActivity(intent,bundle);
+                        startActivity(intent, bundle);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
                     }
                 })
                 .addTo(my_bottom_groupListView);
 
         QMUIGroupListView.newSection(getContext())
-                .addItemView(adviceItem,onClickListener)
-                .addItemView(logoutItem,onClickListener)
+                .addItemView(adviceItem, onClickListener)
+                .addItemView(logoutItem, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        QMUIDialog dialog = new QMUIDialog.MessageDialogBuilder(getActivity())
+                                .setTitle("退出登录?")
+                                .setMessage("您确定要退出登录吗？")
+                                .addAction("取消", new QMUIDialogAction.ActionListener() {
+                                    @Override
+                                    public void onClick(QMUIDialog dialog, int index) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .addAction("确定", new QMUIDialogAction.ActionListener() {
+                                    @Override
+                                    public void onClick(QMUIDialog dialog, int index) {
+                                        dialog.dismiss();
+
+                                        App.jwxtCookie = null;
+                                        handler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                my_UserName.setText("未登录");
+                                                my_info_namae.setText("姓名:当前未登录");
+                                                my_info_class.setText("班级:");
+                                                my_info_studentNum.setText("学号:");
+                                                my_info_college.setText("学院:");
+                                                my_info_major.setText("专业:");
+                                            }
+                                        });
+                                        QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+                                                .setTipWord("已登出")
+                                                .create();
+                                        tipDialog.setCanceledOnTouchOutside(true);
+                                        tipDialog.show();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                tipDialog.dismiss();
+                                            }
+                                        }, 2000);
+                                    }
+                                })
+                                .create(com.qmuiteam.qmui.R.style.QMUI_Dialog);
+                        dialog.show();
+
+
+                    }
+                })
                 .addTo(my_last_groupListView);
 
 
@@ -255,23 +323,48 @@ public class MyFragment extends ImmersionFragment{
                 .autoStatusBarDarkModeEnable(true)
                 .init();
     }
-    public void isLogin(){
-        //TODO 如果当前已经登录则进行更新UI,从Bundle中获取信息
 
-    }
 
     @OnClick(R.id.my_usersImage)
-    public void login_Listener(){
+    public void login_Listener() {
         //进行登录判断
-        if ( App.login_status_flag == 0){
+        if (App.login_status_flag == 0) {
             //当前没有登录
             Intent intent = new Intent(getContext(), LoginActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
+
             getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_still);
         }
-        if (App.login_status_flag == 1){
+        if (App.login_status_flag == 1) {
             //当前已经登录
 
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == 1) {
+                //表示登录成功
+                if (data.getExtras().getBoolean("isLogin")) {
+                    //通知Handler更新UI
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            my_UserName.setText("已登录");
+                            my_info_namae.setText("姓名:" + App.stuDetail.getStuName());
+                            my_info_class.setText("班级:" + App.stuDetail.getStuClass());
+                            my_info_studentNum.setText("学号:" + App.stuDetail.getUsername());
+                            my_info_college.setText("学院:" + App.stuDetail.getCollege());
+                            my_info_major.setText("专业:" + App.stuDetail.getMajor());
+                        }
+                    });
+                    //在后台开启线程进行访问成绩
+
+
+                }
+            }
         }
     }
 }

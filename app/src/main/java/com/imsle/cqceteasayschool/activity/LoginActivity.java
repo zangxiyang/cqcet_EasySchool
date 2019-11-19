@@ -1,6 +1,7 @@
 package com.imsle.cqceteasayschool.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import com.imsle.cqceteasayschool.App;
 import com.imsle.cqceteasayschool.R;
 import com.imsle.cqceteasayschool.model.UserDetail;
 import com.imsle.cqceteasayschool.model.UserLogin;
+import com.imsle.cqceteasayschool.service.InfoClient;
+import com.imsle.cqceteasayschool.utils.JwxtUtil;
 import com.imsle.cqceteasayschool.utils.ZhxyUtil;
 import com.qmuiteam.qmui.arch.QMUIActivity;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -79,9 +82,27 @@ public class LoginActivity extends QMUIActivity {
                     //App.basicCookie = zhxyUtil.getBasicCookie();
                     App.zhxyMsg = zhxyUtil.getZhxyCookie();
 
-                    UserDetail userDetail = zhxyUtil.getUserDetail();
                     if(App.zhxyMsg.getMsg().equals("成功")){
-                        System.out.println(userDetail.getData().getName());
+                        JwxtUtil jwxtUtil = new JwxtUtil(App.zhxyMsg.getCookie(),App.zhxyMsg.getBasicCookie());
+                        App.jwxtCookie = jwxtUtil.getJwxtCookie();
+                        InfoClient client = InfoClient.getInstance();
+
+                        App.stuDetail = client.getStuInfo(App.jwxtCookie);
+                        client.setStuInfoFinishEvent(new InfoClient.InfoEvent() {
+                            @Override
+                            public void OnFinishEvent() {
+                                if (!App.stuDetail.getStuName().isEmpty()){
+                                    Intent intent = getIntent();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putBoolean("isLogin",true);
+                                    intent.putExtras(bundle);
+                                    setResult(1,intent);
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_still, R.anim.slide_out_right);
+                                }
+                            }
+                        });
+
                     }else{
                         System.out.println(App.zhxyMsg.getMsg());
                     }

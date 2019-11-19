@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 import com.imsle.cqceteasayschool.model.CookieMSG;
+import com.imsle.cqceteasayschool.model.ScoreTable;
+import com.imsle.cqceteasayschool.model.StuDetail;
+import com.imsle.cqceteasayschool.model.UserDetail;
 import com.imsle.cqceteasayschool.utils.ZhxyUtil;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.scwang.smartrefresh.header.DeliveryHeader;
@@ -14,6 +17,8 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+
+import java.util.ArrayList;
 
 /**
  * 类名:App
@@ -48,6 +53,15 @@ public class App extends Application {
     //cookie
     //public static String basicCookie ;
     public static CookieMSG zhxyMsg = new CookieMSG();
+
+
+    //全局信息类
+
+    public static StuDetail stuDetail = new StuDetail();
+
+    public static ArrayList<ScoreTable> scoreTables = new ArrayList<ScoreTable>();
+
+    public static String jwxtCookie ;
 
     @Override
     public void onCreate() {
