@@ -2,6 +2,9 @@ package com.imsle.cqceteasayschool;
 
 import android.content.Context;
 
+import com.imsle.cqceteasayschool.model.UserLogin;
+import com.imsle.cqceteasayschool.utils.ZhxyUtil;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -23,5 +26,19 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         assertEquals("com.imsle.cqceteasayschool", appContext.getPackageName());
+    }
+
+    @Test
+    public void testOK(){
+        UserLogin userLogin = new UserLogin();
+        userLogin.setUsername("2017180543");
+        userLogin.setPassword("1235689az");
+        ZhxyUtil zhxyUtil = new ZhxyUtil(userLogin);
+
+        //String cookie = zhxyUtil.getZhxyCookie();
+       // String basicCookie = zhxyUtil.getBasicCookie();
+
+
+        System.out.println(zhxyUtil.getUserDetail());
     }
 }

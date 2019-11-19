@@ -2,18 +2,17 @@ package com.imsle.cqceteasayschool.utils;
 
 import android.util.Log;
 
+
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.imsle.cqceteasayschool.model.UserDetail;
 import com.imsle.cqceteasayschool.model.UserLogin;
+import com.imsle.cqceteasayschool.model.CookieMSG;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.constraintlayout.solver.GoalRow;
 import okhttp3.Call;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -30,6 +29,8 @@ public class ZhxyUtil {
     private String TAG = "MainActivity";
     private String username;
     private String password;
+
+    private CookieMSG msg = new CookieMSG();
 
     private final OkHttpClient httpClient = new OkHttpClient.Builder()
             .cookieJar(new CookieJar() {
@@ -65,26 +66,7 @@ public class ZhxyUtil {
         this.password = userLogin.getPassword();
     }
 
-    public ZhxyUtil() {
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getZhxyCookie(){
+    public CookieMSG getZhxyCookie(){
 
         //第一次:http://sso.cqcet.edu.cn/login 获取cookie(get)
         Request request1 = new Request.Builder()
@@ -118,7 +100,18 @@ public class ZhxyUtil {
             final Call call2 = client.newCall(request2);
             try {
                 Response response = call2.execute();
+                Headers loginHeaders = response.headers();
+                HttpUrl loginUrl = request2.url();
 
+                String testCookie = Cookie.parseAll(loginUrl,loginHeaders).toString();
+
+                Log.d(TAG, "getZhxyCookie: " + testCookie.isEmpty() + " " +testCookie + " " + testCookie.length());
+                if(testCookie.isEmpty() || testCookie.length() == 2){
+                    msg.setCookie(null);
+                    msg.setMsg("密码或账号错误");
+                    msg.setBasicCookie(null);
+                    return msg;
+                }
                 CookieUtils(response,request2,"Request2",true,null);
                 Thread.sleep(300);
             } catch (IOException e) {
@@ -211,15 +204,20 @@ public class ZhxyUtil {
             }
         }
 
-        return cookie;
+        msg.setCookie(cookie);
+        msg.setBasicCookie(basicCookie);
+        msg.setMsg("成功");
+
+        return msg;
     }
 
-    public void CookieUtils(Response response,Request request,String title,boolean flag,String addCookie){
+    public void CookieUtils(Response response, Request request, String title, boolean flag, String addCookie){
         Headers loginHeaders = response.headers();
         HttpUrl loginUrl = request.url();
         List<Cookie> cookies = Cookie.parseAll(loginUrl,loginHeaders);
+
         cookie = cookies.toString().substring(1,cookies.toString().indexOf(";"));
-        /*Log.d(TAG, title + cookie);
+        Log.d(TAG, title + ": " + cookie);
         if(flag){
             basicCookie = cookie;
             Log.d(TAG, "CookieUtils: " + title +": " + basicCookie);
@@ -227,10 +225,7 @@ public class ZhxyUtil {
         if(addCookie != null){
             cookie = cookie + ";" + addCookie;
             Log.d(TAG, "CookieUtils: " + cookie);
-        }*/
-    }
-    public String getBasicCookie(){
-        return basicCookie;
+        }
     }
 
     public UserDetail getUserDetail(){

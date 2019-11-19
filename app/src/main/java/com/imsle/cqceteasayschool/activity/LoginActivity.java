@@ -75,11 +75,17 @@ public class LoginActivity extends QMUIActivity {
                     userLogin.setUsername(username);
                     userLogin.setPassword(pwd);
                     ZhxyUtil zhxyUtil = new ZhxyUtil(userLogin);
-                    App.zhxyCookie = zhxyUtil.getZhxyCookie();
-                    App.basicCookie = zhxyUtil.getBasicCookie();
-                    System.out.println(App.zhxyCookie);
+                    //App.zhxyCookie = zhxyUtil.getZhxyCookie();
+                    //App.basicCookie = zhxyUtil.getBasicCookie();
+                    App.zhxyMsg = zhxyUtil.getZhxyCookie();
+
                     UserDetail userDetail = zhxyUtil.getUserDetail();
-                    System.out.println(userDetail.getData().getName());
+                    if(App.zhxyMsg.getMsg().equals("成功")){
+                        System.out.println(userDetail.getData().getName());
+                    }else{
+                        System.out.println(App.zhxyMsg.getMsg());
+                    }
+
                 }
             }).start();
 
