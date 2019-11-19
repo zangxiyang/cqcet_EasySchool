@@ -3,6 +3,7 @@ package com.imsle.cqceteasayschool;
 import android.app.Application;
 import android.content.Context;
 
+import com.imsle.cqceteasayschool.model.CookieMSG;
 import com.imsle.cqceteasayschool.utils.ZhxyUtil;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.scwang.smartrefresh.header.DeliveryHeader;
@@ -13,7 +14,6 @@ import com.scwang.smartrefresh.layout.api.RefreshFooter;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 /**
  * 类名:App
@@ -43,11 +43,11 @@ public class App extends Application {
     //0为未登录,1为登录
     public static int login_status_flag = 0;
 
-    public static ZhxyUtil zhxyUtil = new ZhxyUtil();
+    public static ZhxyUtil zhxyUtil;
 
     //cookie
-    public static String basicCookie ;
-    public static String zhxyCookie;
+    //public static String basicCookie ;
+    public static CookieMSG zhxyMsg = new CookieMSG();
 
     @Override
     public void onCreate() {
