@@ -2,10 +2,12 @@ package com.imsle.cqceteasayschool.service;
 
 import android.util.Log;
 
+import com.imsle.cqceteasayschool.model.KBDetail;
 import com.imsle.cqceteasayschool.model.KCachievement;
 import com.imsle.cqceteasayschool.model.News;
 import com.imsle.cqceteasayschool.model.StuCredit;
 import com.imsle.cqceteasayschool.model.StuDetail;
+import com.imsle.cqceteasayschool.utils.KBUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,7 +16,10 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,6 +38,11 @@ public class InfoClient {
     private final String TAG = "InfoClient";
     ArrayList<News> news = new ArrayList<News>();
     OkHttpClient client = new OkHttpClient();
+    private Document document;
+    private int weekDay = 0;
+    private KBDetail kbDetail = new KBDetail();
+    private ArrayList<KBDetail> kbDetails = new ArrayList<>();
+    private boolean weekDayFlag = false;//判断是否是同一节课
 
     private InfoClient() {
     }
@@ -40,6 +50,7 @@ public class InfoClient {
     private InfoEvent infoEvent;
     private InfoEvent KcInfoEvent;
     private InfoEvent scoreEvent;
+    private InfoEvent kbEvent;
 
     public static InfoClient getInstance() {
         return infoClient;
@@ -247,6 +258,232 @@ public class InfoClient {
             }
         });
         return stuCredit;
+    }
+
+
+    public ArrayList<KBDetail> getKB(String cookie){
+        kbDetails.clear();
+
+        //访问教务系统测试
+        Request jwxtTest = new Request.Builder()
+                .url("http://42.247.8.142:8080/jsxsd/xskb/xskb_list.do")
+                .get()
+                .addHeader("Cookie",cookie)
+                .build();
+        final Call testJwxtCall = client.newCall(jwxtTest);
+
+        testJwxtCall.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "onFailure: ",e );
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    //获取课表网页
+                    String str = response.body().string();
+                    document = Jsoup.parseBodyFragment(str);
+
+                    Elements contentDetail = document.getElementsByClass("kbcontent");
+                    //Log.d(TAG, "onResponse: ");
+                    //Log.d(TAG, "onResponse: " + contentDetail.text());
+
+                    for(int i = 0;i < contentDetail.size();i ++){
+                        weekDay = contentDetail.get(i).select("div[class=kbcontent]").attr("id").charAt(33) - 48;
+                        //Log.d(TAG, "kcContens: " + contentDetail.get(i).text() + " week" + weekDay);
+                        //分割第n节所有课
+                        String[] kcDetails = contentDetail.get(i).text().toString().split(" ");
+                        int flag = 0;
+                        for (String kcdetail : kcDetails){
+                            //Log.d(TAG, "kcdetail: " + kcdetail);
+                            if(kcdetail.equals("---------------------") || kcdetail.isEmpty()){
+                                weekDayFlag = true;
+                                //Log.d(TAG, "onResponse: " + "continue");
+                                continue;
+                            }
+
+                            if(!kcdetail.isEmpty()){
+                                switch (flag){
+                                    case 0: kbDetail.setCourseName(kcdetail);
+                                        flag ++;
+                                        break;
+                                    case 1: kbDetail.setTeacherName(kcdetail);
+                                        flag ++;
+                                        break;
+                                    case 2:
+                                        if(Character.isDigit(kcdetail.charAt(0))){
+                                            kbWeekAndSection(kcdetail);
+                                            flag ++;
+                                        }else{
+                                            kbDetail.setCourseName(kcDetails[0] + kcDetails[1]);
+                                            kbDetail.setTeacherName(kcDetails[2]);
+                                            //Log.d(TAG, "傻逼打的空格: ");
+                                            flag = 2;
+                                        }
+
+                                        break;
+                                    case 3:
+                                        kbDetail.setClassRoom(kcdetail);
+                                        kbDetail.setWeekDay(weekDay);
+                                        flag = 0;
+                                        kbDetails.add(kbDetail);
+                                        //Log.d(TAG, "kbDetails: " + kbDetail);
+                                        kbDetail = new KBDetail();
+                                }
+                            }
+                        }
+                    }
+
+
+                    //对周次进行处理
+                    ArrayList<Integer> arrayList = null;
+                    for(int i = 0;i < kbDetails.size();i ++){
+                        Stack<String> temp= new Stack<>();
+                        //使用split分割周次
+                        String[] spiTemp = kbDetails.get(i).getWeek().split(",");
+
+                        //将周次存入temp
+                        for(int j = 0;j < spiTemp.length;j ++){
+                            // Log.d(TAG, "spiTemp: " + spiTemp[j]);
+                            //去除中文
+                            int t = spiTemp[j].indexOf("(");
+                            if( t != -1){
+                                spiTemp[j] = spiTemp[j].substring(0,t);
+                            }
+
+                            temp.push(spiTemp[j]);
+                            arrayList = new ArrayList();
+                            //Log.d(TAG, "temp: " + temp);
+
+                        }
+
+                        //将周次存入KBDetails
+                        while (!temp.isEmpty()){
+                            String week = temp.pop();
+                            //Log.d(TAG, "week: " + week);
+
+                            if(week.contains("-")){
+                                //Log.d(TAG, "----------: ");
+                                String[] temp2 = week.split("-");
+                                int startWeek = Integer.parseInt(temp2[0]);
+                                int endWeek = Integer.parseInt(temp2[1]);
+
+                                // Log.d(TAG, "start end: " + startWeek + " " +endWeek);
+
+                                for(int start = startWeek;start <= endWeek;start ++){
+                                    arrayList.add(start);
+                                }
+                            }else{
+                                arrayList.add(Integer.parseInt(week));
+                            }
+
+                        }
+                        //Log.d(TAG, "arrlist: " + arrayList);
+                        kbDetails.get(i).setWeekDetail(arrayList);
+                        getSection(kbDetails);
+
+                    }
+
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //Log.d(TAG, "onResponse: " + kbDetails.size());
+                //打印课表详情
+                        /*for(KBDetail kbDetail : kbDetails){
+                              Log.d(TAG, "myKb: " + kbDetail);
+                         }*/
+
+                //打印本周课表
+                /*KBUtil kbUtil = new KBUtil(kbDetails);*/
+                //ArrayList<KBDetail> test = kbUtil.getWeekKB(12);
+
+                //Log.d(TAG, "本周课表: " + test);
+
+                /*for(KBDetail tes:test){
+                    Log.d(TAG, "课程名字：" + tes.getCourseName());
+                    Log.d(TAG, "任课老师：" + tes.getTeacherName());
+                    Log.d(TAG, "上课教室：" + tes.getClassRoom());
+                }*/
+                if (kbEvent != null){kbEvent.OnFinishEvent();}
+            }
+        });
+        return kbDetails;
+    }
+    public void getSection(ArrayList<KBDetail> kbDetails) {
+        ArrayList<Integer> section = new ArrayList<>();
+
+        for (KBDetail kbDetail : kbDetails) {
+            if (kbDetail.getSection().contains("11")) {
+                section.add(11);
+            }
+            if (kbDetail.getSection().contains("10")) {
+                section.add(10);
+            }
+            if (kbDetail.getSection().contains("9")) {
+                section.add(9);
+                Collections.sort(section);
+                kbDetail.setSections(section);
+                section = new ArrayList<Integer>();
+                continue;
+            }
+            if (kbDetail.getSection().contains("8")) {
+                section.add(8);
+            }
+            if (kbDetail.getSection().contains("7")) {
+                section.add(7);
+                Collections.sort(section);
+                kbDetail.setSections(section);
+                section = new ArrayList<Integer>();
+                continue;
+            }
+            if (kbDetail.getSection().contains("6")) {
+                section.add(6);
+            }
+            if (kbDetail.getSection().contains("5")) {
+                section.add(5);
+                Collections.sort(section);
+                kbDetail.setSections(section);
+                section = new ArrayList<Integer>();
+                continue;
+            }
+            if (kbDetail.getSection().contains("4")) {
+                section.add(4);
+            }
+            if (kbDetail.getSection().contains("3")) {
+                section.add(3);
+                Collections.sort(section);
+                kbDetail.setSections(section);
+                section = new ArrayList<Integer>();
+                continue;
+            }
+            if (kbDetail.getSection().contains("2")) {
+                section.add(2);
+            }
+            String temp = kbDetail.getSection();
+            if (kbDetail.getSection().contains("1")) {
+                section.add(1);
+                Collections.sort(section);
+                kbDetail.setSections(section);
+                section = new ArrayList<Integer>();
+                continue;
+            }
+        }
+    }
+
+    public void kbWeekAndSection(String kcDetails){
+        String[] temp = kcDetails.split("\\[");
+        //Log.d(TAG, "kbWeekAndSection: " + temp[0]);
+        kbDetail.setWeek(temp[0]);
+        //Log.d(TAG, "kbWeekAndSection: " + temp[1]);
+        kbDetail.setSection("["+temp[1]);
+    }
+
+
+
+    public void setKbDetailOnFinishEvent(InfoEvent event){
+        this.kbEvent = event;
     }
 
     public void setKCachievementOnFinishEvent(InfoEvent event) {

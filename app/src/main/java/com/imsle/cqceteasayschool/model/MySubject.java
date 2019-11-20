@@ -5,12 +5,24 @@ import com.zhuangfei.timetable.model.ScheduleEnable;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
 /**
  * 类名:MySubject
  * 说明: 课程表实体类
  * 创建时间: 2019/11/19 0:15
  * 创建人: 臧锡洋
  */
+@Accessors(chain = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter@Setter
+@ToString
 public class MySubject implements ScheduleEnable {
     public static final String EXTRAS_ID="extras_id";
     public static final String EXTRAS_AD_URL="extras_ad_url";//广告Url
@@ -64,33 +76,6 @@ public class MySubject implements ScheduleEnable {
 
     private String url;
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public MySubject() {
-        // TODO Auto-generated constructor stub
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTerm(String term) {
-        this.term = term;
-    }
-
-    public String getTerm() {
-        return term;
-    }
 
     public MySubject(String term,String name, String room, String teacher, List<Integer> weekList, int start, int step, int day, int colorRandom,String time) {
         super();
@@ -106,70 +91,6 @@ public class MySubject implements ScheduleEnable {
         this.time=time;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
-    public String getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
-    }
-
-    public void setWeekList(List<Integer> weekList) {
-        this.weekList = weekList;
-    }
-
-    public List<Integer> getWeekList() {
-        return weekList;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
-    }
-
-    public int getStep() {
-        return step;
-    }
-
-    public void setStep(int step) {
-        this.step = step;
-    }
-
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getColorRandom() {
-        return colorRandom;
-    }
-
-    public void setColorRandom(int colorRandom) {
-        this.colorRandom = colorRandom;
-    }
-
     @Override
     public Schedule getSchedule() {
         Schedule schedule=new Schedule();
@@ -183,6 +104,11 @@ public class MySubject implements ScheduleEnable {
         schedule.setColorRandom(2);
         schedule.putExtras(EXTRAS_ID,getId());
         schedule.putExtras(EXTRAS_AD_URL,getUrl());
+        return schedule;
+    }
+
+    public Schedule clearSchedule(){
+        Schedule schedule=new Schedule();
         return schedule;
     }
 

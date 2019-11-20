@@ -247,7 +247,7 @@ public class MyFragment extends ImmersionFragment {
                     @Override
                     public void onClick(View view) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("url", "https://www.imsle.com");
+                        bundle.putString("url", "https://www.idengl.com");
                         Intent intent = new Intent(getContext(), WebViewActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent, bundle);

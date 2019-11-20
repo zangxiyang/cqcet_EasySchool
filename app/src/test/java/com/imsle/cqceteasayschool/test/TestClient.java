@@ -1,5 +1,7 @@
 package com.imsle.cqceteasayschool.test;
 
+import com.imsle.cqceteasayschool.base.SubjectRepertory;
+import com.imsle.cqceteasayschool.model.MySubject;
 import com.imsle.cqceteasayschool.model.News;
 import com.imsle.cqceteasayschool.model.UserLogin;
 import com.imsle.cqceteasayschool.service.InfoClient;
